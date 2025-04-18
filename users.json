@@ -1,0 +1,153 @@
+{
+    "رادین": {
+        "email": "radin@gmail.com",
+        "password": "radin1383",
+        "bio": "",
+        "followers": [
+            "alio"
+        ],
+        "following": [],
+        "posts": [
+            {
+                "content": "radin",
+                "likes": 3,
+                "comments": [
+                    {
+                        "username": "رادین",
+                        "comment": "com"
+                    },
+                    {
+                        "username": "رادین",
+                        "comment": "com"
+                    },
+                    {
+                        "user": "alio",
+                        "text": "1"
+                    }
+                ]
+            }
+        ],
+        "private": false,
+        "follow_requests": [],
+        "blocked_users": [],
+        "stories": [],
+        "saved_posts": [],
+        "inbox": []
+    },
+    "ali": {
+        "email": "ali@gmail.com",
+        "password": "ali0000",
+        "bio": "",
+        "followers": [],
+        "following": [],
+        "posts": [],
+        "private": false,
+        "follow_requests": [],
+        "blocked_users": [],
+        "stories": [],
+        "saved_posts": [],
+        "inbox": []
+    },
+    "alio": {
+        "email": "alio@gmail.com",
+        "password": "alio",
+        "bio": "",
+        "followers": [
+            "lol",
+            "alion"
+        ],
+        "following": [
+            "رادین"
+        ],
+        "posts": [
+            {
+                "content": "post jadid",
+                "likes": 1,
+                "comments": [
+                    {
+                        "username": "alio",
+                        "comment": "com1"
+                    }
+                ]
+            },
+            {
+                "content": "dw",
+                "likes": 1,
+                "comments": [
+                    {
+                        "user": "alio",
+                        "text": "@lol che jaleb"
+                    },
+                    {
+                        "user": "alio",
+                        "text": "@op che jaleb"
+                    }
+                ]
+            }
+        ],
+        "private": true,
+        "stories": [
+            {
+                "content": "happiness",
+                "likes": 0
+            }
+        ],
+        "saved_posts": [
+            "kir"
+        ],
+        "follow_requests": [],
+        "blocked_users": [],
+        "inbox": []
+    },
+    "lol": {
+        "email": "lol@gmail.com",
+        "password": "lol",
+        "bio": "",
+        "followers": [],
+        "following": [
+            "alio"
+        ],
+        "posts": [],
+        "private": false,
+        "follow_requests": [],
+        "blocked_users": [],
+        "stories": [],
+        "saved_posts": [],
+        "inbox": [
+            {
+                "from": "alio",
+                "content": "radin"
+            }
+        ]
+    },
+    "alion": {
+        "email": "alion@gmail.com",
+        "password": "alion",
+        "bio": "",
+        "private": false,
+        "followers": [],
+        "following": [
+            "alio"
+        ],
+        "follow_requests": [],
+        "blocked_users": [],
+        "posts": [],
+        "stories": [],
+        "saved_posts": [],
+        "inbox": []
+    },
+    "op": {
+        "email": "op@gmail.com",
+        "password": "op",
+        "bio": "",
+        "private": false,
+        "followers": [],
+        "following": [],
+        "follow_requests": [],
+        "blocked_users": [],
+        "posts": [],
+        "stories": [],
+        "saved_posts": [],
+        "inbox": []
+    }
+}

@@ -1,27 +1,28 @@
+from rich.console import Console
 import auth
+import home
 
-def show_menu():
-    print("\n✨ خوش آمدید به برنامه Insta-Terminal")
-    print("1. ثبت‌نام")
-    print("2. ورود")
-    print("3. خروج")
+console = Console()
 
 def main():
     while True:
-        show_menu()
-        choice = input("انتخاب شما: ").strip()
+        console.rule("[bold cyan]Welcome to Insta-Terminal")
+        console.print("1. Register")
+        console.print("2. Login")
+        console.print("3. Exit")
+        choice = console.input("[green]> ").strip()
+
         if choice == "1":
             auth.register()
         elif choice == "2":
             user = auth.login()
             if user:
-                print(f"\n🎉 {user} عزیز وارد شدید.")
-                # در مراحل بعدی وارد صفحه اصلی می‌شود
+                home.show_home(user)
         elif choice == "3":
-            print("👋 خداحافظ!")
+            console.print("👋 Goodbye!")
             break
         else:
-            print("❌ گزینه نامعتبر است.")
+            console.print("❌ Invalid choice.")
 
 if __name__ == "__main__":
     main()
