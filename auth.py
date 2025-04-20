@@ -4,14 +4,12 @@ import os
 DB_FILE = "users.json"
 
 def load_users():
-    """Load users from JSON and ensure all fields exist."""
     if os.path.exists(DB_FILE):
         with open(DB_FILE, "r", encoding="utf-8") as f:
             users = json.load(f)
     else:
         users = {}
 
-    # تکمیل فیلدهای از‌پیش‌معرفی‌نشده
     for data in users.values():
         data.setdefault("email", "")
         data.setdefault("password", "")
@@ -26,22 +24,26 @@ def load_users():
         data.setdefault("saved_posts", [])
         data.setdefault("inbox", [])
 
+        for p in data["posts"]:
+            p.setdefault("liked_by", [])
+
+        for s in data["stories"]:
+            s.setdefault("liked_by", [])
+            s.setdefault("viewed_by", [])
+
     return users
 
 def save_users(users):
-    """Save the users dict back to JSON file."""
     with open(DB_FILE, "w", encoding="utf-8") as f:
         json.dump(users, f, indent=4, ensure_ascii=False)
 
 def register():
-    """ثبت‌نام کاربر جدید"""
     users = load_users()
     print("\n--- REGISTER ---")
     username = input("Username: ").strip()
     email    = input("Email: ").strip()
     password = input("Password: ").strip()
 
-    # اعتبارسنجی ساده
     if not username or not email or not password:
         print("❌ All fields are required.")
         return
@@ -55,7 +57,6 @@ def register():
         print("❌ Email already in use.")
         return
 
-    # ذخیره‌ی کاربر جدید
     users[username] = {
         "email": email,
         "password": password,
@@ -74,7 +75,6 @@ def register():
     print("✅ Registration successful!")
 
 def login():
-    """ورود کاربر"""
     users = load_users()
     print("\n--- LOGIN ---")
     username = input("Username: ").strip()
