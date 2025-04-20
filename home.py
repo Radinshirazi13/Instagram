@@ -10,12 +10,10 @@ from home_helpers import (
 
 console = Console()
 
-def load_posts(users: dict, current: str) -> list:
-    """Collect posts visible to the current user."""
+def load_posts(users, current):
     posts = []
     for u, data in users.items():
         for p in data.get("posts", []):
-            # visibility conditions
             visible = (
                 u == current
                 or not data.get("private", False)
@@ -28,13 +26,12 @@ def load_posts(users: dict, current: str) -> list:
                 posts.append(copy)
     return posts
 
-
-def show_home(current: str):
+def show_home(current):
     users = auth.load_users()
     posts = load_posts(users, current)
 
     while True:
-        console.rule(f"[bold magenta]HOME - {current}")
+        console.rule(f"[bold red]HOME - {current}")
 
         if not posts:
             console.print("📭 No posts.")
@@ -72,26 +69,28 @@ def show_home(current: str):
 
         choice = console.input("[green]> ").strip()
 
-        # 1: Like
         if choice == "1":
             try:
                 idx = int(console.input("Post # to like: ")) - 1
                 if 0 <= idx < len(posts):
-                    posts[idx]["likes"] = posts[idx].get("likes", 0) + 1
                     owner = posts[idx]["username"]
                     for orig in users[owner]["posts"]:
                         if orig["content"] == posts[idx]["content"]:
-                            orig["likes"] = posts[idx]["likes"]
+                            orig.setdefault("liked_by", [])
+                            if current in orig["liked_by"]:
+                                console.print("⚠️ You already liked this post.")
+                            else:
+                                orig["liked_by"].append(current)
+                                orig["likes"] = orig.get("likes", 0) + 1
+                                auth.save_users(users)
+                                posts = load_posts(users, current)
+                                console.print("❤️ Liked!")
                             break
-                    auth.save_users(users)
-                    posts = load_posts(users, current)
-                    console.print("❤️ Liked!")
                 else:
                     console.print("❌ Invalid post number.")
             except ValueError:
                 console.print("❌ Enter a valid number.")
 
-        # 2: Comment
         elif choice == "2":
             try:
                 idx = int(console.input("Post # to comment: ")) - 1
@@ -110,15 +109,18 @@ def show_home(current: str):
             except ValueError:
                 console.print("❌ Enter a valid number.")
 
-        # 3: New post
         elif choice == "3":
             content = console.input("Enter new post content: ").strip()
-            users[current].setdefault("posts", []).append({"content": content, "likes": 0, "comments": []})
+            users[current].setdefault("posts", []).append({
+                "content": content,
+                "likes": 0,
+                "comments": [],
+                "liked_by": []
+            })
             auth.save_users(users)
             posts = load_posts(users, current)
             console.print("📝 New post created!")
 
-        # 4: Save/Unsave
         elif choice == "4":
             try:
                 idx = int(console.input("Post # to (un)save: ")) - 1
@@ -137,14 +139,16 @@ def show_home(current: str):
             except ValueError:
                 console.print("❌ Enter a valid number.")
 
-        # 5: Share
         elif choice == "5":
             try:
                 idx = int(console.input("Post # to share: ")) - 1
                 if 0 <= idx < len(posts):
                     to = console.input("Send to username: ").strip()
                     if to in users:
-                        users[to].setdefault("inbox", []).append({"from": current, "content": posts[idx]["content"]})
+                        users[to].setdefault("inbox", []).append({
+                            "from": current,
+                            "content": posts[idx]["content"]
+                        })
                         auth.save_users(users)
                         console.print("✉️ Post shared!")
                     else:
@@ -154,33 +158,41 @@ def show_home(current: str):
             except ValueError:
                 console.print("❌ Enter a valid number.")
 
-        # 6: View stories
         elif choice == "6":
             seen = False
             for u in users[current].get("following", []):
                 for story in users[u].get("stories", []):
+                    story.setdefault("viewed_by", [])
+                    story.setdefault("liked_by", [])
+                    if current in story["viewed_by"]:
+                        continue
                     console.print(f"{u} ▶ {story['content']} ❤ {story['likes']}")
+                    story["viewed_by"].append(current)
                     if console.input("Like story? (y/n): ").strip().lower() == 'y':
-                        story['likes'] += 1
-                        auth.save_users(users)
+                        if current not in story["liked_by"]:
+                            story["liked_by"].append(current)
+                            story["likes"] = story.get("likes", 0) + 1
+                    auth.save_users(users)
                     seen = True
             if not seen:
-                console.print("📭 No stories to view.")
+                console.print("📭 No new stories to view.")
 
-        # 7: Add story
         elif choice == "7":
             text = console.input("Enter story content: ").strip()
-            users[current].setdefault("stories", []).append({"content": text, "likes": 0})
+            users[current].setdefault("stories", []).append({
+                "content": text,
+                "likes": 0,
+                "liked_by": [],
+                "viewed_by": []
+            })
             auth.save_users(users)
             console.print("📸 Story added!")
 
-        # 8: Search users
         elif choice == "8":
             search.search_user(current, users)
             auth.save_users(users)
             posts = load_posts(users, current)
 
-        # 9: My profile
         elif choice == "9":
             new_user = show_own_profile(current, users)
             if new_user:
@@ -188,35 +200,33 @@ def show_home(current: str):
                 posts = load_posts(users, current)
             auth.save_users(users)
 
-        # 10: Settings
         elif choice == "10":
             show_settings(current, users)
             auth.save_users(users)
 
-        # 11: Follow requests
         elif choice == "11":
             handle_requests(current, users)
             auth.save_users(users)
             posts = load_posts(users, current)
 
-        # 12: Messages
         elif choice == "12":
             show_messages(current, users)
             send_message(current, users)
             auth.save_users(users)
 
-        # 13: Group chats
         elif choice == "13":
             handle_group_chat(current, users)
             auth.save_users(users)
 
-        # 14: Delete post
         elif choice == "14":
             try:
                 idx = int(console.input("Post # to delete: ")) - 1
                 if 0 <= idx < len(posts) and posts[idx]["username"] == current:
                     content = posts[idx]["content"]
-                    users[current]["posts"] = [p for p in users[current]["posts"] if p["content"] != content]
+                    users[current]["posts"] = [
+                        p for p in users[current]["posts"]
+                        if p["content"] != content
+                    ]
                     auth.save_users(users)
                     posts = load_posts(users, current)
                     console.print("🗑️ Post deleted.")
@@ -225,7 +235,6 @@ def show_home(current: str):
             except ValueError:
                 console.print("❌ Enter a valid number.")
 
-        # 15: View comments
         elif choice == "15":
             try:
                 idx = int(console.input("Post # to view comments: ")) - 1
@@ -236,13 +245,12 @@ def show_home(current: str):
                     else:
                         console.rule("Comments")
                         for c in cmts:
-                            console.print(f"{c.get('user','')}: {c.get('text','')}")
+                            console.print(f"{c.get('user', '')}: {c.get('text', '')}")
                 else:
                     console.print("❌ Invalid post number.")
             except ValueError:
                 console.print("❌ Enter a valid number.")
 
-        # 16: Logout
         elif choice == "16":
             console.print("🔙 Returning to main menu.")
             break
