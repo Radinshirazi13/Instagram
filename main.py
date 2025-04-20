@@ -6,7 +6,7 @@ console = Console()
 
 def main():
     while True:
-        console.rule("[bold cyan]Welcome to Insta-Terminal")
+        console.rule("[bold red]Welcome to Insta")
         console.print("1. Register")
         console.print("2. Login")
         console.print("3. Exit")
@@ -19,7 +19,7 @@ def main():
             if user:
                 home.show_home(user)
         elif choice == "3":
-            console.print("👋 Goodbye!")
+            console.print("👋 bye")
             break
         else:
             console.print("❌ Invalid choice.")
