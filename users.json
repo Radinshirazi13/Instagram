@@ -7,26 +7,7 @@
             "alio"
         ],
         "following": [],
-        "posts": [
-            {
-                "content": "radin",
-                "likes": 3,
-                "comments": [
-                    {
-                        "username": "رادین",
-                        "comment": "com"
-                    },
-                    {
-                        "username": "رادین",
-                        "comment": "com"
-                    },
-                    {
-                        "user": "alio",
-                        "text": "1"
-                    }
-                ]
-            }
-        ],
+        "posts": [],
         "private": false,
         "follow_requests": [],
         "blocked_users": [],
@@ -54,34 +35,29 @@
         "bio": "",
         "followers": [
             "lol",
-            "alion"
+            "alion",
+            "op"
         ],
         "following": [
-            "رادین"
+            "رادین",
+            "op"
         ],
         "posts": [
             {
                 "content": "post jadid",
-                "likes": 1,
+                "likes": 9,
                 "comments": [
                     {
                         "username": "alio",
                         "comment": "com1"
-                    }
-                ]
-            },
-            {
-                "content": "dw",
-                "likes": 1,
-                "comments": [
-                    {
-                        "user": "alio",
-                        "text": "@lol che jaleb"
                     },
                     {
                         "user": "alio",
-                        "text": "@op che jaleb"
+                        "text": "@op watch"
                     }
+                ],
+                "liked_by": [
+                    "alio"
                 ]
             }
         ],
@@ -89,11 +65,32 @@
         "stories": [
             {
                 "content": "happiness",
-                "likes": 0
+                "likes": 5,
+                "liked_by": [
+                    "op"
+                ],
+                "viewed_by": []
+            },
+            {
+                "content": "fun",
+                "likes": 5,
+                "liked_by": [
+                    "op"
+                ],
+                "viewed_by": []
+            },
+            {
+                "content": "a",
+                "likes": 5,
+                "liked_by": [
+                    "op"
+                ],
+                "viewed_by": []
             }
         ],
         "saved_posts": [
-            "kir"
+            "kir",
+            "radin"
         ],
         "follow_requests": [],
         "blocked_users": [],
@@ -117,6 +114,10 @@
             {
                 "from": "alio",
                 "content": "radin"
+            },
+            {
+                "from": "alio",
+                "content": "dw"
             }
         ]
     },
@@ -141,11 +142,50 @@
         "password": "op",
         "bio": "",
         "private": false,
+        "followers": [
+            "alio"
+        ],
+        "following": [
+            "alio"
+        ],
+        "follow_requests": [],
+        "blocked_users": [],
+        "posts": [],
+        "stories": [
+            {
+                "content": "ooooo",
+                "likes": 0,
+                "liked_by": [],
+                "viewed_by": [
+                    "alio"
+                ]
+            }
+        ],
+        "saved_posts": [],
+        "inbox": [
+            {
+                "from": "alio",
+                "content": "post jadid"
+            }
+        ]
+    },
+    "radin": {
+        "email": "qabcd@gmail.com",
+        "password": "1234",
+        "bio": "",
+        "private": false,
         "followers": [],
         "following": [],
         "follow_requests": [],
         "blocked_users": [],
-        "posts": [],
+        "posts": [
+            {
+                "content": "salam",
+                "likes": 0,
+                "comments": [],
+                "liked_by": []
+            }
+        ],
         "stories": [],
         "saved_posts": [],
         "inbox": []
