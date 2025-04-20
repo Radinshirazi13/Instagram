@@ -10,5 +10,17 @@
                 "text": "salam"
             }
         ]
+    },
+    "group1": {
+        "members": [
+            "op",
+            "alio"
+        ],
+        "messages": [
+            {
+                "from": "op",
+                "text": "hi"
+            }
+        ]
     }
 }
