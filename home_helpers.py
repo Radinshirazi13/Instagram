@@ -5,7 +5,6 @@ import json, os
 console = Console()
 
 def show_own_profile(current, users):
-    """نمایش و ویرایش پروفایل خود کاربر"""
     u = users[current]
     while True:
         console.rule(f"[bold cyan]Your Profile: {current}")
@@ -38,7 +37,6 @@ def show_own_profile(current, users):
             console.print("❌ Invalid choice.")
 
 def show_settings(current, users):
-    """تغییر حریم خصوصی و مشاهده بلاک‌شده‌ها"""
     while True:
         priv = users[current]["private"]
         console.rule("[bold yellow]Settings")
@@ -54,12 +52,11 @@ def show_settings(current, users):
             bl = users[current]["blocked_users"]
             console.print("Blocked:", ", ".join(bl) if bl else "No blocked users.")
         elif cmd == "3":
-            break
+            return None
         else:
             console.print("❌ Invalid choice.")
 
 def handle_requests(current, users):
-    """مدیریت درخواست‌های دنبال کردن"""
     reqs = users[current]["follow_requests"]
     if not reqs:
         console.print("📭 No follow requests.")
@@ -75,7 +72,6 @@ def handle_requests(current, users):
         reqs.remove(r)
 
 def show_messages(current, users):
-    """مشاهده پیام‌های دریافتی"""
     inbox = users[current]["inbox"]
     if not inbox:
         console.print("📭 No messages.")
@@ -86,7 +82,6 @@ def show_messages(current, users):
     users[current]["inbox"].clear()
 
 def send_message(current, users):
-    """ارسال پیام دایرکت"""
     to = console.input("Send message to: ").strip()
     if to not in users:
         console.print("❌ User not found.")
@@ -96,7 +91,6 @@ def send_message(current, users):
     console.print("✉️ Message sent!")
 
 def handle_group_chat(current, users):
-    """چت گروهی"""
     GROUP_FILE = "groups.json"
     if os.path.exists(GROUP_FILE):
         with open(GROUP_FILE, "r") as f:
